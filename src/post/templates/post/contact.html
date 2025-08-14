@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <!-- Partie gauche : infos et accordéon -->
+        <section class="col-12 col-md-6 mb-3">
+            <!-- Message info -->
+            <div class="alert alert-info alert-dismissible fade show">
+                <p class="h4">Besoin d'aide ?</p>
+                <p>Vous pouvez nous contacter directement via ce formulaire ou consulter la FAQ ci-dessous.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <h1 class="h3">Nous contacter</h1>
+            <p>Notre équipe est disponible pour répondre à toutes vos questions, demandes d'informations ou suggestions. 
+               N'hésitez pas à nous écrire, nous vous répondrons dans les plus brefs délais.</p>
+            <p>Pour toute assistance technique, précision sur nos services ou proposition de partenariat, 
+               utilisez le formulaire à droite ou explorez les rubriques ci-dessous.</p>
+
+            <!-- Accordéon -->
+            <div class="accordion" id="accordionContact">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordion1">
+                            Horaires et disponibilité
+                        </button>
+                    </h2>
+                    <section id="accordion1" class="accordion-collapse collapse show" data-bs-parent="#accordionContact">
+                        <div class="accordion-body">
+                            Nous sommes ouverts du lundi au vendredi de 9h à 18h, et le samedi de 9h à 13h. 
+                            En dehors de ces horaires, vous pouvez nous laisser un message et nous vous répondrons dès notre retour.
+                        </div>
+                    </section>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion2">
+                            Assistance technique
+                        </button>
+                    </h2>
+                    <section id="accordion2" class="accordion-collapse collapse" data-bs-parent="#accordionContact">
+                        <div class="accordion-body">
+                            Pour tout problème technique, veuillez détailler votre situation dans le formulaire, 
+                            en précisant votre navigateur, appareil et captures d’écran si possible.
+                        </div>
+                    </section>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion3">
+                            Informations sur nos services
+                        </button>
+                    </h2>
+                    <section id="accordion3" class="accordion-collapse collapse" data-bs-parent="#accordionContact">
+                        <div class="accordion-body">
+                            Nous proposons divers services adaptés à vos besoins. 
+                            Contactez-nous pour obtenir un devis personnalisé ou des précisions.
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie droite : formulaire Django -->
+        <section class="col-12 col-md-6">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <h2 class="h3">Formulaire de contact</h2>
+
+                <fieldset>
+                    <legend>Informations personnelles</legend>
+                    <div class="mb-3 form-floating">
+                        {{ form.first_name }}
+                        <label for="{{ form.first_name.id_for_label }}">Votre prénom</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        {{ form.last_name }}
+                        <label for="{{ form.last_name.id_for_label }}">Votre nom de famille</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        {{ form.email }}
+                        <label for="{{ form.email.id_for_label }}">Votre email</label>
+                        <small class="form-text">Nous ne partagerons pas votre adresse email avec des tiers.</small>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Votre message</legend>
+                    <div class="mb-3 form-floating">
+                        {{ form.message }}
+                        <label for="{{ form.message.id_for_label }}">Votre message</label>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
