@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier Article{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Modifier l'article</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-warning mt-3">Enregistrer</button>
+    </form>
+</div>
+{% endblock %}
