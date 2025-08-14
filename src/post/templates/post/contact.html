@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
+<style>
+            textarea {
+                resize: none; /* Empêche le redimensionnement */
+            }
+        </style>
 <div class="container my-4">
     <div class="row">
         <!-- Partie gauche : infos et accordéon -->
@@ -64,39 +70,18 @@
         </section>
 
         <!-- Partie droite : formulaire Django -->
-        <section class="col-12 col-md-6">
-            <form method="post" novalidate>
-                {% csrf_token %}
-                <h2 class="h3">Formulaire de contact</h2>
+         <section class="col-12 col-md-6">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <h2 class="h3">Formulaire de contact</h2>
 
-                <fieldset>
-                    <legend>Informations personnelles</legend>
-                    <div class="mb-3 form-floating">
-                        {{ form.first_name }}
-                        <label for="{{ form.first_name.id_for_label }}">Votre prénom</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                        {{ form.last_name }}
-                        <label for="{{ form.last_name.id_for_label }}">Votre nom de famille</label>
-                    </div>
-                    <div class="mb-3 form-floating">
-                        {{ form.email }}
-                        <label for="{{ form.email.id_for_label }}">Votre email</label>
-                        <small class="form-text">Nous ne partagerons pas votre adresse email avec des tiers.</small>
-                    </div>
-                </fieldset>
+        {{ form.as_p }}
 
-                <fieldset>
-                    <legend>Votre message</legend>
-                    <div class="mb-3 form-floating">
-                        {{ form.message }}
-                        <label for="{{ form.message.id_for_label }}">Votre message</label>
-                    </div>
-                </fieldset>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</section>
 
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </form>
-        </section>
+        
     </div>
 </div>
 {% endblock %}
