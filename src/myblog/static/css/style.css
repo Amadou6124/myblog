@@ -34,3 +34,7 @@ footer {
     text-align: center;
     margin-top: 50px;
 }
+
+textarea {
+    resize: none; /* Empêche le redimensionnement */
+}

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView , CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
+from .forms import ContactForm
 from .models import Article
+
  
 
 
@@ -47,3 +48,14 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'post/article_confirm_delete.html'
     success_url = reverse_lazy('home')
+
+
+def contact_view(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ContactForm()
+    return render(request, 'post/contact.html', {'form': form})
