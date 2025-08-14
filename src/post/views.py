@@ -8,7 +8,8 @@ from .models import Article
 
 # Create your views here.
 def home(request):
-    return render(request, 'post/index.html')
+    articles = Article.objects.order_by('-created_at')[:6]  
+    return render(request, 'post/index.html', {'articles': articles})
 
 class ArticleCreateView(CreateView):
     model = Article
