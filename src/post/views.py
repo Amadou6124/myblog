@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.views.generic import ListView ,CreateView
 from django.urls import reverse_lazy
 
 from .models import Article
@@ -10,6 +10,19 @@ from .models import Article
 def home(request):
     articles = Article.objects.order_by('-created_at')[:6]  
     return render(request, 'post/index.html', {'articles': articles})
+
+
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'post/article_list.html'
+    context_object_name = 'articles'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Article.objects.filter(title__icontains=query)
+        return Article.objects.all()
+    
 
 class ArticleCreateView(CreateView):
     model = Article
