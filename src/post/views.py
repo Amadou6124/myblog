@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView , CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from .models import Article
+from .models import Article, Contact
  
 
 
@@ -47,3 +47,6 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'post/article_confirm_delete.html'
     success_url = reverse_lazy('home')
+
+
+
