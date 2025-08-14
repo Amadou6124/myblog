@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../../../Downloads/fichiers_d_exercice_essentiel_bootstrap5/Final"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Final"
+	}
+}

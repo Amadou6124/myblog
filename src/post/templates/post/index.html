@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil - My Blog{% endblock %}
+
+{% block content %}
+<main class="container-fluid my-3">
+    <div class="text-center my-5">
+        <h1 class="display-4">Bienvenue sur <span class="text-primary">My Blog</span></h1>
+        <p class="lead mt-3">
+            Découvrez des articles inspirants, des conseils pratiques et des histoires captivantes chaque jour.
+        </p>
+        <a href="#" class="btn btn-primary btn-lg mt-4">
+            📚 Voir tous les articles
+        </a>
+    </div>
+
+    <!-- Section principale -->
+    <section class="row mb-3">
+        <div class="col-12 col-lg-8">
+            <img src="{% static 'img/desk.jpg' %}" alt="Bureau desk" class="img-fluid rounded">
+        </div>
+        <div class="col-12 col-lg-4 bg-light py-5 px-3">
+            <h1 class="display-4">Lorem, ipsum dolor.</h1>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam debitis quasi voluptatum neque voluptates sunt.</p>
+            <hr class="my-3">
+            <a href="#" class="btn btn-primary">En savoir plus</a>
+        </div>
+    </section>
+
+    <!-- Section des articles dynamiques -->
+    <section class="row gy-3">
+        {% for article in articles %}
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card h-100">
+                {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="card-img-top">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h1 class="h5 card-title">{{ article.title }}</h1>
+                    <p class="card-text">{{ article.content|truncatewords:20 }}</p>
+                    <a href="{% url 'article-detail' article.pk %}" class="btn btn-primary mt-auto">Lire la suite</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

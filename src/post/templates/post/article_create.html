@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un Article{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Ajouter un nouvel article</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <style>
+            textarea {
+                resize: none; /* Empêche le redimensionnement */
+            }
+        </style>
+
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Titre</label>
+            {{ form.title }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_content" class="form-label">Contenu</label>
+            {{ form.content }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_image" class="form-label">Image</label>
+            {{ form.image }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Publier</button>
+    </form>
+</div>
+{% endblock %}
