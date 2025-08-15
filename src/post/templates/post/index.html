@@ -4,6 +4,20 @@
 {% block title %}Accueil - My Blog{% endblock %}
 
 {% block content %}
+
+
+        <!-- Message info -->
+         {% if user.is_authenticated %}
+         <!-- Info vide -->
+        {% else %}
+
+            <div class="alert alert-info alert-dismissible fade show">
+                <p class="h4">Pour info</p>
+                <p>Vous devez vous connecter ou inscrire pour pouvoir ajouter des nouvelle articles</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endif %}
+
 <main class="container-fluid my-3">
     <div class="text-center my-5">
         <h1 class="display-4">Bienvenue sur <span class="text-primary">My Blog</span></h1>
