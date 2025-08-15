@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}{{ object.title }}{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2>{{ articles.title }}</h2>
-    {% if articles.image %}
-    <img src="{{ object.image.url }}" class="img-fluid mb-3" alt="{{ object.title }}">
-    {% endif %}
-    <p>{{ articles.content }}</p>
-    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Retour aux articles</a>
+    <h2 class="mb-4 pb-2 border-bottom">{{ object.title }}</h2>
+    
+    <div class="row">
+        {% if object.image %}
+        <div class="col-lg-4 mb-3">
+            <img src="{{ object.image.url }}" 
+                 class="img-fluid article-image" 
+                 alt="{{ object.title }}">
+        </div>
+        {% endif %}
+        
+        <div class="col-lg-8">
+            <p>{{ object.content }}</p>
+            <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Retour aux articles</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

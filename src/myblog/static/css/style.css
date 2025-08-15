@@ -38,3 +38,9 @@ footer {
 textarea {
     resize: none; /* Empêche le redimensionnement */
 }
+
+
+.article-image {
+    max-height: 500px; /* limite la hauteur sur grands écrans */
+    object-fit: cover; /* garde le ratio sans déformer */
+}
