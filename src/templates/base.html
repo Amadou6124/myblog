@@ -15,73 +15,56 @@
     <title>{% block title %}My Blog{% endblock %}</title>
 </head>
 <body>
-    <div class="toast position-absolute end-0" data-bs-autohide="false" style="z-index: 10000;">
+
+    {% if user.is_authenticated %}
+    <div class="toast position-absolute end-0 mt-3 me-3" data-bs-autohide="true" data-bs-delay="3000" style="z-index: 10000;">
         <div class="toast-header bg-primary text-white">
-            <strong class="me-auto">Bootstrap</strong>
+            <strong class="me-auto">Bloguino</strong>
             <small>Maintenant</small>
             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
         </div>
         <div class="toast-body">
-            Bienvenue dans Bootstrap 5 !
+            Bienvenue {{ user.username }} !
         </div>
     </div>
+    {% endif %}
 
     <header class="navbar navbar-expand-md navbar-light bg-light px-3">
-        <a href="{% url 'home' %}" class="navbar-brand">
-            Bloguino
-        </a>
+        <a href="{% url 'home' %}" class="navbar-brand">Bloguino</a>
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-content">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar-content">
-            <nav>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Accueil</a></li>
+            <nav class="ms-auto">
+                <ul class="navbar-nav me-3">
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'post-list' %}">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'article-add' %}">Ajouter article</a></li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'article-add' %}">Ajouter article</a></li>
+                    {% endif %}
+
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                 </ul>
             </nav>
-            <form action="{% url 'post-list' %}" id="searchForm" class="ms-auto" method="get">
-                <div class="input-group">
-                    <input type="search" name="q" placeholder="Rechercher" class="form-control">
-                    <button type="submit" class="btn btn-primary">
-            <!-- icône de recherche -->
-                    </button>
-                </div>
-            </form>
-        </div>
-        <button type="button" class="btn btn-primary ms-3" data-bs-toggle="offcanvas" data-bs-target="#userTools">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-            </svg>
-        </button>
-    </header>
 
-    <section class="offcanvas offcanvas-end" id="userTools">
-        <div class="offcanvas-header">
-            <h2 class="offcanvas-title">Se connecter</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <form>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Nom d'utilisateur</label>
-                    <input type="text" class="form-control" name="username" id="username">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" name="password" id="password">
-                </div>
-                <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" id="rememberMe" />
-                    <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-                </div>
-                <button class="btn btn-primary">Se connecter</button>
+            <form action="{% url 'post-list' %}" id="searchForm" class="d-flex me-3" method="get">
+                <input type="search" name="q" placeholder="Rechercher" class="form-control me-1">
+                <button type="submit" class="btn btn-primary">🔍</button>
             </form>
+
+            <!-- Liens connexion / déconnexion -->
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Se déconnecter</button>
+            </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary me-2">Se connecter</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-secondary">S'inscrire</a>
+            {% endif %}
         </div>
-    </section>
+    </header>
 
     <div class="container mt-4">
         {% block content %}{% endblock %}
