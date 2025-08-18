@@ -9,7 +9,7 @@ from .models import Article
 
 # Create your views here.
 def home(request):
-    articles = Article.objects.order_by('-created_at')[:6]  
+    articles = Article.objects.order_by('-created_at')[:9]  
     return render(request, 'post/index.html', {'articles': articles})
 
 

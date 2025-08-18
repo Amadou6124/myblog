@@ -5,59 +5,84 @@
 
 {% block content %}
 
-
-        <!-- Message info -->
-         {% if user.is_authenticated %}
-         <!-- Info vide -->
-        {% else %}
-
-            <div class="alert alert-info alert-dismissible fade show">
-                <p class="h4">Pour info</p>
-                <p>Vous devez vous connecter ou inscrire pour pouvoir ajouter des nouvelle articles</p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        {% endif %}
-
-<main class="container-fluid my-3">
-    <div class="text-center my-5">
-        <h1 class="display-4">Bienvenue sur <span class="text-primary">My Blog</span></h1>
-        <p class="lead mt-3">
-            Découvrez des articles inspirants, des conseils pratiques et des histoires captivantes chaque jour.
-        </p>
-        <a href="#" class="btn btn-primary btn-lg mt-4">
-            📚 Voir tous les articles
-        </a>
-    </div>
-
-    <!-- Section principale -->
-    <section class="row mb-3">
-        <div class="col-12 col-lg-8">
-            <img src="{% static 'img/desk.jpg' %}" alt="Bureau desk" class="img-fluid rounded">
+    {% if not user.is_authenticated %}
+        <div class="alert alert-info alert-dismissible fade show">
+            <h4 class="alert-heading">Pour info</h4>
+            <p>Vous devez vous connecter ou vous inscrire pour pouvoir ajouter de nouveaux articles.</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="col-12 col-lg-4 bg-light py-5 px-3">
-            <h1 class="display-4">Lorem, ipsum dolor.</h1>
-            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam debitis quasi voluptatum neque voluptates sunt.</p>
-            <hr class="my-3">
-            <a href="#" class="btn btn-primary">En savoir plus</a>
-        </div>
-    </section>
+    {% endif %}
 
-    <!-- Section des articles dynamiques -->
-    <section class="row gy-3">
-        {% for article in articles %}
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card h-100">
-                {% if article.image %}
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="card-img-top">
+    <main class="container my-5">
+        <header class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Bienvenue sur <span class="text-primary">My Blog</span></h1>
+            <p class="lead mt-3">Découvrez des articles inspirants, des conseils pratiques et des histoires captivantes.</p>
+        </header>
+
+        <section class="row g-4">
+            <div class="col-12 col-lg-8">
+                {% if articles|length > 0 %}
+                    <article class="card shadow-sm h-100">
+                        {% with last_article=articles|first %}
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    {% if last_article.image %}
+                                        <img src="{{ last_article.image.url }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ last_article.title }}">
+                                    {% else %}
+                                        <img src="{% static 'img/placeholder.jpg' %}" class="img-fluid rounded-start h-100 object-fit-cover" alt="Image par défaut">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 d-flex flex-column">
+                                    <div class="card-body">
+                                        <h2 class="card-title h3">{{ last_article.title }}</h2>
+                                        <p class="card-text">{{ last_article.content|truncatewords:50 }}</p>
+                                        <p class="card-text"><small class="text-muted">Publié le {{ last_article.created_at|date:"d M Y" }}</small></p>
+                                        <a href="{% url 'article-detail' last_article.pk %}" class="btn btn-primary mt-auto">Lire la suite</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endwith %}
+                    </article>
                 {% endif %}
-                <div class="card-body d-flex flex-column">
-                    <h1 class="h5 card-title">{{ article.title }}</h1>
-                    <p class="card-text">{{ article.content|truncatewords:20 }}</p>
-                    <a href="{% url 'article-detail' article.pk %}" class="btn btn-primary mt-auto">Lire la suite</a>
+            </div>
+            
+            <div class="col-12 col-lg-4">
+                <div class="row g-4">
+                    {% for article in articles|slice:"1:5" %}
+                        <div class="col-12">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h3 class="card-title h6">{{ article.title }}</h3>
+                                    <p class="card-text"><small class="text-muted">Publié le {{ article.created_at|date:"d M Y" }}</small></p>
+                                    <a href="{% url 'article-detail' article.pk %}" class="btn btn-sm btn-outline-primary mt-2">Lire</a>
+                                </div>
+                            </article>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </section>
-</main>
+        </section>
+
+        <hr class="my-5">
+
+        <section>
+            <h2 class="h3 mb-4">Tous les articles</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for article in articles|slice:"5:" %}
+                    <div class="col">
+                        <article class="card h-100 shadow-sm">
+                            {% if article.image %}
+                                <img src="{{ article.image.url }}" class="card-img-top object-fit-cover" style="height: 200px;" alt="{{ article.title }}">
+                            {% endif %}
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title h5">{{ article.title }}</h3>
+                                <p class="card-text">{{ article.content|truncatewords:20 }}</p>
+                                <a href="{% url 'article-detail' article.pk %}" class="btn btn-primary mt-auto">Lire la suite</a>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
 {% endblock %}
