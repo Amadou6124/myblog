@@ -8,7 +8,10 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <div class="#">
         <button type="submit" class="btn btn-warning mt-3">Enregistrer</button>
+        <a href="{% url 'post-list' %}" class="btn btn-warning mt-3">Annuler</a>
+        </div>
     </form>
 </div>
 {% endblock %}
