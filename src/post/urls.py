@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, ArticleDeleteView, contact_view
+from .views import home, ArticleListView, ArticleDetailView, ArticleCreateView, ArticleUpdateView, ArticleDeleteView, contact_view, ArticleListAPI
 
 
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path('add/', ArticleCreateView.as_view(), name='article-add'),
     path('<int:pk>/edit/', ArticleUpdateView.as_view(), name='article-update'),
     path('<int:pk>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
+
+    path('api/articles/', ArticleListAPI.as_view(), name='article-list-api'),
 ]

@@ -3,6 +3,21 @@ from django.views.generic import ListView, DetailView , CreateView, UpdateView, 
 from django.urls import reverse_lazy
 from .forms import ContactForm
 from .models import Article
+from .serializers import ArticleSerializer
+from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
+
+
+
+class ArticlePagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+class ArticleListAPI(generics.ListAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    pagination_class = ArticlePagination
 
  
 
