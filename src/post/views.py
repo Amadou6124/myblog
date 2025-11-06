@@ -6,18 +6,17 @@ from .models import Article
 from .serializers import ArticleSerializer
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
+class A
 
-class ArticlePagination(PageNumberPagination):
-    page_size = 2
-    page_size_query_param = 'page_size'
-    max_page_size = 100
+
 
 class ArticleListAPI(generics.ListAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    pagination_class = ArticlePagination
 
  
 
