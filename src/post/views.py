@@ -7,10 +7,8 @@ from .serializers import ArticleSerializer
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
+from rest_framework import filters  
 
-
-class A
 
 
 
