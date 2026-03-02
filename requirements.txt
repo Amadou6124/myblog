@@ -1,6 +1,21 @@
-asgiref==3.9.1
+# Django & extensions
 Django==5.2.5
 djangorestframework==3.16.1
-pillow==11.3.0
+django-filter==24.3
+
+# Database
 psycopg2-binary==2.9.10
+
+# Media
+Pillow==11.3.0
+
+# Production server & static files
+gunicorn==23.0.0
+whitenoise==6.8.2
+
+# Utils
+python-dotenv==1.0.1
+
+# Django dependencies (pinned for reproducibility)
+asgiref==3.9.1
 sqlparse==0.5.3
